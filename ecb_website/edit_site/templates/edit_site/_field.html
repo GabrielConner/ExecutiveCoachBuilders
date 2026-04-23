@@ -6,7 +6,7 @@
 
 <div class="fleet-field {% if field.errors %}has-error{% endif %}">
     <label for="{{ field.id_for_label }}" class="fleet-field-label">
-        {{ field.label }}{% if field.field.required %} <span class="fleet-required">*</span>{% endif %}
+        {{ name }}{% if field.field.required %} <span class="fleet-required">*</span>{% endif %}
     </label>
     {{ field }}
     {% if field.help_text %}
