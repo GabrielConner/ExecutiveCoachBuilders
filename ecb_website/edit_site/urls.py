@@ -5,5 +5,6 @@ app_name = 'edit_site'
 
 urlpatterns = [
     path('', views.site_changes, name='site_changes'),
+    path('<name>', views.site_changes, name='site_changes'),
     path('admin_view/', views.admin_view, name='admin_view'),
 ]

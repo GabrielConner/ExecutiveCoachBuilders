@@ -1,23 +1,18 @@
 from django import forms
-from .models import SiteSettings
+from .models import SiteSetting
 
-class SiteSettingsForm(forms.ModelForm):
+class SiteSettingForm(forms.ModelForm):
+    media = None
     class Meta:
-        model = SiteSettings
-        fields = ['name', 'value', 'type']
+        model = SiteSetting
+        fields = ['name', 'file_value', 'text_value']
         labels = {
             'name': 'Name',
-            'value': 'Value',
-            'type': 'Type',
+            'file_value': 'File Value',
+            'text_value': 'Text Value',
         }
 
-
-class MediaSettingsForm(forms.ModelForm):
-    value = forms.FileField(required=True)
-    class Meta:
-        model = SiteSettings
-        fields = ['name', 'value']
-        labels = {
-            'name': 'Name',
-            'value': 'Value',
-        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['text_value'].required = False
+        self.fields['file_value'].required = False

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import contactForm
-from edit_site.models import SiteSettings
+from edit_site.models import SiteSetting
 from garage.models import Vehicle
 from django.http import HttpResponseRedirect
 from django.conf import settings as Settings
@@ -14,7 +14,7 @@ def home(request):
     best_sellers = published.filter(display_order=0)
 
     # Load settings
-    site_settings_model = SiteSettings.objects.all()
+    site_settings_model = SiteSetting.objects.all()
     site_settings = {s.name : s.get_value() for s in site_settings_model}
 
     # Build one (label, queryset) pair per category that actually has published vehicles
