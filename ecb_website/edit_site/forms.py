@@ -16,3 +16,4 @@ class SiteSettingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['text_value'].required = False
         self.fields['file_value'].required = False
+        

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
+from django.conf import settings
 from .models import SiteSetting
 from .forms import SiteSettingForm
 
@@ -15,8 +16,8 @@ def site_changes(request, name = None):
         form    = SiteSettingForm(request.POST, request.FILES, instance=setting)
 
         if (form.is_valid()):
-            form.save()
-            return HttpResponse("Accepted")
+            instance = form.save()
+            return HttpResponse("{};{}".format(settings.MEDIA_URL, instance.file_value))
         return HttpResponse("Invalid", status=400)
 
 
