@@ -17,7 +17,11 @@ def site_changes(request, name = None):
 
         if (form.is_valid()):
             instance = form.save()
-            return HttpResponse("{};{}".format(settings.MEDIA_URL, instance.file_value))
+            print('saved')
+            if instance.file:
+                return HttpResponse("{};{}".format(settings.MEDIA_URL, instance.file_value))
+            else:
+                return HttpResponse(instance.text_value)
         return HttpResponse("Invalid", status=400)
 
 
@@ -31,9 +35,9 @@ def site_changes(request, name = None):
         form = SiteSettingForm(instance=setting)
         settings_form.append(form)
         if setting.file:
-            form.media = True
+            form.mediaType = True
         else:
-            form.media = False
+            form.mediaType = False
 
     return render(request, "edit_site/site_changes.html", {'admin_site':True, 'site_settings': site_settings, 'settings_form': settings_form})
 
@@ -43,5 +47,14 @@ def admin_view(request):
     site_settings_model = SiteSetting.objects.all()
     site_settings = {s.name : s.get_value() for s in site_settings_model}
 
+    
+    settings_form = {}
+    for setting in site_settings_model:
+        form = SiteSettingForm(instance=setting)
+        settings_form[setting.name]= form;
+        if setting.file:
+            form.mediaType = True
+        else:
+            form.mediaType = False
 
-    return render(request, request.GET.get('s', 'client_view/'), {'admin_site': True, 'site_settings': site_settings})
+    return render(request, request.GET.get('s', 'client_view/'), {'admin_site': True, 'site_settings': site_settings, 'settings_form': settings_form})

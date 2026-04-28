@@ -2,7 +2,7 @@ from django import forms
 from .models import SiteSetting
 
 class SiteSettingForm(forms.ModelForm):
-    media = None
+    mediaType = None
     class Meta:
         model = SiteSetting
         fields = ['name', 'file_value', 'text_value']
